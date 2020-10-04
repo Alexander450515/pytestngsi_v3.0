@@ -1,33 +1,42 @@
 from random import randint
 
-from api import random
+from api import entity
 
 
 class TestEntity:
 
     def test_create_new_entity(self, client):
-        data = random.random_entity()
-        res = client.vr(client.create_entity(data), [201, 204])
-        response_body = res.json()
-        assert response_body.get("bookingid")
-        assert response_body.get("booking") == data
+        """Отправляет POST запрос на создание->
+        Отправляет GET запрос->
+        Отправляет DELETE запрос на удаление"""
+        # Создание
+        data = entity.random_entity()
+        client.verify_response(client.create_entity(data), [201, 204])
+        # Проверка корректности создания /v2/entities/{entityId}
+        response = client.verify_response(client.get_entity(data['id']), [200])
+        response_body = response.json()
+        for key in data:
+            if key in ('id', 'type'):
+                assert response_body[key] == data[key]
+            else:
+                assert response_body[key]['value'] == data[key]['value']
+        # Проверка корректности создания /v2/entities/{entityId}/attrs
+        response = client.verify_response(client.get_entity_attribute(data['id']), [200])
+        for key in data:
+            if key in ('id', 'type'):
+                continue
+            assert response_body[key]['value'] == data[key]['value']
+        # Удаление
+        client.verify_response(client.delete_entity(data['id']), [204])
 
-    # def test_create_new_entity(self, client):
-    #     data = random.random_entity()
-    #     res = client.vr(client.create_entity(data), [200, 201])
-    #     created = res.json()
-    #     assert created.get("bookingid")
-    #     assert created.get("booking") == data
-    #
-    # def test_new_entity_exists(self, client):
-    #     data = random.random_entity()
-    #     res = client.vr(client.create_entity(data), [200, 201])
-    #     created = res.json()
-    #     bookingid = created.get("bookingid")
-    #     res = client.vr(client.get_entity(bookingid))
-    #     exists = res.json()
-    #     assert exists == data
-    #
+
+
+
+
+
+
+
+
     # def test_update_entity(self, client):
     #     data = random.random_entity()
     #     res = client.vr(client.create_entity(data), [200, 201])

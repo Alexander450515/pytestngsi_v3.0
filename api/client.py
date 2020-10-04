@@ -13,23 +13,21 @@ class RestfulBookerClient:
     def __init__(self, host):
         self.host = host
 
-    def verify_response(self, res: requests.Response, ok_status=200) -> requests.Response:
+    def verify_response(self, response: requests.Response, ok_status=200) -> requests.Response:
         func = inspect.stack()[1][3]
         if isinstance(ok_status, int):
             ok_status = [ok_status]
-        if res.status_code not in ok_status:
+        if response.status_code not in ok_status:
             raise ValueError(
                 f"Verified response: function {func} failed: "
-                f"server responded {res.status_code} "
-                f"with data: {res.content}"
+                f"server responded {response.status_code} "
+                f"with data: {response.content}"
             )
         else:
             logger.info(
-                f"Verified response: function {func} code {res.status_code}"
+                f"Verified response: function {func} code {response.status_code}"
             )
-        return res
-
-    vr = verify_response
+        return response
 
     # def authorize(self, username, password):
     #     res = self.login(username, password)
@@ -43,12 +41,17 @@ class RestfulBookerClient:
     #     data = {"username": username, "password": password}
     #     return self._s.post(self.host + "/auth", json=data)
 
-    # Изменить запросы
     def create_entity(self, data: dict):
         return self._s.post(self.host + "/v2/entities", json=data)
 
-    def update_entity(self, uid: int, data: dict):
-        return self._s.put(self.host + f"/booking/{uid}", json=data)
+    def get_entity(self, uid: str):
+        return self._s.get(self.host + f"/v2/entities/{uid}")
 
-    def get_entity(self, uid: int):
-        return self._s.get(self.host + f"/booking/{uid}")
+    def get_entity_attribute(self, uid: str):
+        return self._s.get(self.host + f"/v2/entities/{uid}/attrs")
+
+    def update_entity(self, uid: str, data: dict):
+        return self._s.put(self.host + f"/v2/entities/{uid}", json=data)
+
+    def delete_entity(self, uid: str):
+        return self._s.put(self.host + f"/v2/entities/{uid}")

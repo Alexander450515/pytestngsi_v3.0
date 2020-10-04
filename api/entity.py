@@ -25,6 +25,28 @@ def entity():
     }
 
 
+def empty_entity():
+    return {
+        "type": "",
+        "id": "",
+        "temperature": {
+            "value": ""
+        },
+        "humidity": {
+            "value": ""
+        },
+        "location": {
+            "value": "41.3763726, 2.1864475",
+            "type": "geo:point",
+            "metadata": {
+                "crs": {
+                    "value": "WGS84"
+                }
+            }
+        }
+    }
+
+
 def wrong_entity():
     return {
         "type": faker.word(),
@@ -58,6 +80,17 @@ def entity_replace():
     }
 
 
+def empty_entity_replace():
+    return {
+        "temperature": {
+            "value": ""
+        },
+        "seatNumber": {
+            "value": ""
+        }
+    }
+
+
 def wrong_entity_replace():
     return {
         "temperature": {
@@ -67,10 +100,6 @@ def wrong_entity_replace():
             "value": faker.pyint()
         }
     }
-
-
-
-
 
 # {
 #         "firstname": faker.first_name(),

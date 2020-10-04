@@ -3,7 +3,7 @@ from faker import Faker
 faker = Faker()
 
 
-def random_entity():
+def entity():
     return {
         "type": faker.word(),
         "id": faker.pystr(),
@@ -23,6 +23,20 @@ def random_entity():
             }
         }
     }
+
+
+def entity_replace():
+    return {
+        "temperature": {
+            "value": faker.pyint()
+        },
+        "seatNumber": {
+            "value": faker.pyint()
+        }
+    }
+
+
+
 
 
 

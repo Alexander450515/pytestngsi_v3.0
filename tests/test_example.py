@@ -36,10 +36,10 @@ class TestEntity:
         Отправляет GET запрос->
         Отправляет DELETE запрос на удаление"""
         # Создание
-        data = entity.random_entity()
+        data = entity.entity_replace()
         client.verify_response(client.create_entity(data), [201, 204])
         # Замена атрибутов
-        data_for_replace = entity.random_entity()
+        data_for_replace = entity.entity_replace()
         client.verify_response(client.put_entity(data_for_replace), [204])
         # Проверка корректности создания /v2/entities/{entityId}/attrs
         response = client.verify_response(client.get_entity_attribute(data['id']), [200])

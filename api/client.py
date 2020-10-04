@@ -41,17 +41,17 @@ class RestfulBookerClient:
     #     data = {"username": username, "password": password}
     #     return self._s.post(self.host + "/auth", json=data)
 
-    def create_entity(self, data: dict):
+    def create_entity_url(self, data: dict):
         return self._s.post(self.host + "/v2/entities", json=data)
 
-    def get_entity(self, uid: str):
+    def get_entity_url(self, uid: str):
         return self._s.get(self.host + f"/v2/entities/{uid}")
 
-    def get_entity_attribute(self, uid: str):
+    def get_entity_attribute_url(self, uid: str):
         return self._s.get(self.host + f"/v2/entities/{uid}/attrs")
 
-    def update_entity(self, uid: str, data: dict):
+    def update_entity_url(self, uid: str, data: dict):
         return self._s.put(self.host + f"/v2/entities/{uid}", json=data)
 
-    def delete_entity(self, uid: str):
-        return self._s.put(self.host + f"/v2/entities/{uid}")
+    def delete_entity_url(self, uid: str):
+        return self._s.put(self.host + f"/v2/entities/{uid}/attrs")

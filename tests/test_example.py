@@ -3,7 +3,7 @@ import pytest
 from api import entity
 
 data_to_try = [
-    # ("templates", "templates_for_replace", "templates_for_append")
+    # ("templates", "templates_for_replace")
     ('entity.entity()', 'entity.entity_replace()'),
     ('entity.wrong_entity()', 'wrong_entity_replace()'),
 ]

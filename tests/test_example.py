@@ -1,17 +1,25 @@
 from random import randint
-
+import pytest
 from api import entity
+
+data_to_try = [
+    # ("templates", "templates_for_replace", "templates_for_append")
+    ('entity.entity()', 'entity.entity_replace()'),
+    ('entity.wrong_entity()', 'wrong_entity_replace()'),
+]
 
 
 class TestEntity:
 
-    def test_create_new_entity(self, client):
+    @pytest.mark.parametrize(("data", "data_for_replace"),
+                             data_to_try)
+    def test_create_new_entity(self, client, data, data_for_replace):
         """Отправляет POST запрос на создание->
         Отправляет GET запрос->
         Отправляет DELETE запрос на удаление"""
         # Создание
-        data = entity.random_entity()
-        client.verify_response(client.create_entityl(data), [201, 204])
+        data = entity.entity()
+        client.verify_response(client.create_entity(data), [201, 204])
         # Проверка корректности создания /v2/entities/{entityId}
         response = client.verify_response(client.get_entity(data['id']), [200])
         response_body = response.json()
@@ -30,13 +38,15 @@ class TestEntity:
         # Удаление
         client.verify_response(client.delete_entity(data['id']), [204])
 
-    def test_replace_all_entity_attributes(self, client):
+    @pytest.mark.parametrize(("data", "data_for_replace"),
+                             data_to_try)
+    def test_replace_all_entity_attributes(self, client, data, data_for_replace):
         """Отправляет POST запрос на создание->
         Отправляет UPDATE запрос на замену атрибутов->
         Отправляет GET запрос->
         Отправляет DELETE запрос на удаление"""
         # Создание
-        data = entity.entity_replace()
+        data = entity.entity()
         client.verify_response(client.create_entity(data), [201, 204])
         # Замена атрибутов
         data_for_replace = entity.entity_replace()

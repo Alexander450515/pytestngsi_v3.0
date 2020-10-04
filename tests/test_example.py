@@ -11,9 +11,9 @@ class TestEntity:
         Отправляет DELETE запрос на удаление"""
         # Создание
         data = entity.random_entity()
-        client.verify_response(client.create_entity_url(data), [201, 204])
+        client.verify_response(client.create_entityl(data), [201, 204])
         # Проверка корректности создания /v2/entities/{entityId}
-        response = client.verify_response(client.get_entity_url(data['id']), [200])
+        response = client.verify_response(client.get_entity(data['id']), [200])
         response_body = response.json()
         for key in data:
             if key in ('id', 'type'):
@@ -21,14 +21,35 @@ class TestEntity:
             else:
                 assert response_body[key]['value'] == data[key]['value']
         # Проверка корректности создания /v2/entities/{entityId}/attrs
-        response = client.verify_response(client.get_entity_attribute_url(data['id']), [200])
+        response = client.verify_response(client.get_entity_attribute(data['id']), [200])
         response_body = response.json()
         for key in data:
             if key in ('id', 'type'):
                 continue
             assert response_body[key]['value'] == data[key]['value']
         # Удаление
-        client.verify_response(client.delete_entity_url(data['id']), [204])
+        client.verify_response(client.delete_entity(data['id']), [204])
+
+    def test_replace_all_entity_attributes(self, client):
+        """Отправляет POST запрос на создание->
+        Отправляет UPDATE запрос на замену атрибутов->
+        Отправляет GET запрос->
+        Отправляет DELETE запрос на удаление"""
+        # Создание
+        data = entity.random_entity()
+        client.verify_response(client.create_entity(data), [201, 204])
+        # Замена атрибутов
+        data_for_replace = entity.random_entity()
+        client.verify_response(client.put_entity(data_for_replace), [204])
+        # Проверка корректности создания /v2/entities/{entityId}/attrs
+        response = client.verify_response(client.get_entity_attribute(data['id']), [200])
+        response_body = response.json()
+        for key in data:
+            if key in ('id', 'type'):
+                continue
+            assert response_body[key]['value'] == data[key]['value']
+        # Удаление
+        client.verify_response(client.delete_entity(data['id']), [204])
 
 
 

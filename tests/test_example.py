@@ -2,19 +2,11 @@ from random import randint
 import pytest
 from api import entity
 
-data_to_try = [
-    # ("templates", "templates_for_replace")
-    ('entity.entity()', 'entity.entity_replace()'),
-    ('entity.empty_entity()', 'entity.empty_entity_replace()'),
-    ('entity.wrong_entity()', 'entity.wrong_entity_replace()'),
-]
-
 
 class TestEntity:
 
-    @pytest.mark.parametrize(("data", "data_for_replace"),
-                             data_to_try)
-    def test_create_new_entity(self, client, data, data_for_replace):
+    @pytest.mark.parametrize(("data",), [('entity.entity()',)])
+    def test_create_new_entity(self, client, data):
         """Отправляет POST запрос на создание->
         Отправляет GET запрос->
         Отправляет DELETE запрос на удаление"""
@@ -40,7 +32,7 @@ class TestEntity:
         client.verify_response(client.delete_entity(data['id']), [204])
 
     @pytest.mark.parametrize(("data", "data_for_replace"),
-                             data_to_try)
+                             [('entity.entity()', 'entity.entity_replace()')])
     def test_replace_all_entity_attributes(self, client, data, data_for_replace):
         """Отправляет POST запрос на создание->
         Отправляет UPDATE запрос на замену атрибутов->
@@ -61,6 +53,12 @@ class TestEntity:
             assert response_body[key]['value'] == data[key]['value']
         # Удаление
         client.verify_response(client.delete_entity(data['id']), [204])
+
+    def test_create_empty_entity(self, client):
+        """Должен вернуть ошибку"""
+        data = entity.empty_entity()
+        client.verify_response(client.create_entity(data), [404])  #
+
 
 
 

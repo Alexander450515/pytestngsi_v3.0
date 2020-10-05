@@ -55,7 +55,7 @@ class TestEntity:
         client.verify_response(client.delete_entity(data['id']), [204])
 
     def test_create_empty_entity(self, client):
-        """Должен вернуть ошибку"""
+        """Должен вернуть ошибку 404"""
         data = entity.empty_entity()
         client.verify_response(client.create_entity(data), [404])  #
 

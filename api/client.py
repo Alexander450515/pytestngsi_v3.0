@@ -29,18 +29,6 @@ class RestfulBookerClient:
             )
         return response
 
-    # def authorize(self, username, password):
-    #     res = self.login(username, password)
-    #     if res.status_code != 200:
-    #         raise Exception("Unable to authorize using given credentials")
-    #     session_token = res.json().get("token")
-    #     cookie = requests.cookies.create_cookie("token", session_token)
-    #     self._s.cookies.set_cookie(cookie)
-    #
-    # def login(self, username, password):
-    #     data = {"username": username, "password": password}
-    #     return self._s.post(self.host + "/auth", json=data)
-
     def create_entity(self, data: dict):
         return self._s.post(self.host + "/v2/entities", json=data)
 
@@ -54,4 +42,18 @@ class RestfulBookerClient:
         return self._s.put(self.host + f"/v2/entities/{uid}", json=data)
 
     def delete_entity(self, uid: str):
-        return self._s.put(self.host + f"/v2/entities/{uid}/attrs")
+        return self._s.delete(self.host + f"/v2/entities/{uid}/attrs")
+
+
+
+    # def authorize(self, username, password):
+    #     res = self.login(username, password)
+    #     if res.status_code != 200:
+    #         raise Exception("Unable to authorize using given credentials")
+    #     session_token = res.json().get("token")
+    #     cookie = requests.cookies.create_cookie("token", session_token)
+    #     self._s.cookies.set_cookie(cookie)
+    #
+    # def login(self, username, password):
+    #     data = {"username": username, "password": password}
+    #     return self._s.post(self.host + "/auth", json=data)

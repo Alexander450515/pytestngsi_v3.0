@@ -5,7 +5,8 @@ from api import entity
 
 class TestEntity:
 
-    # @pytest.mark.parametrize(("data",), [('entity.entity()',)])
+    # pytest -v -m positive_test для запуска всех позитивных тестов
+    @pytest.mark.positive_test
     def test_create_new_entity(self, client):
         """Отправляет POST запрос на создание->
         Отправляет GET запрос->
@@ -31,6 +32,7 @@ class TestEntity:
         # Удаление
         client.verify_response(client.delete_entity(data['id']), [204])
 
+    @pytest.mark.positive_test
     def test_replace_all_entity_attributes(self, client):
         """Отправляет POST запрос на создание->
         Отправляет PUT запрос на замену атрибутов->
@@ -52,6 +54,7 @@ class TestEntity:
         # Удаление
         client.verify_response(client.delete_entity(data['id']), [204])
 
+    @pytest.mark.positive_test
     def test_update_or_append_entity_attributes(self, client):
         """Отправляет POST запрос на создание->
         Отправляет PUT запрос на замену атрибутов->
@@ -73,6 +76,7 @@ class TestEntity:
         # Удаление
         client.verify_response(client.delete_entity(data['id']), [204])
 
+    @pytest.mark.positive_test
     def test_update_existing_entity_attributes(self, client):
         """Отправляет POST запрос на создание->
         Отправляет PUT запрос на замену атрибутов->
@@ -93,6 +97,9 @@ class TestEntity:
             assert response_body[key]['value'] == data_for_update[key]['value']
         # Удаление
         client.verify_response(client.delete_entity(data['id']), [204])
+
+
+
 
 
     # def test_create_empty_entity(self, client):

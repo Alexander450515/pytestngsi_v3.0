@@ -38,6 +38,9 @@ class RestfulBookerClient:
     def get_entity_attribute(self, uid: str):
         return self._s.get(self.host + f"/v2/entities/{uid}/attrs")
 
+    def update_or_append_entity(self, uid: str, data: dict):
+        return self._s.put(self.host + f"/v2/entities/{uid}/attrs", json=data)
+
     def put_entity(self, uid: str, data: dict):
         return self._s.put(self.host + f"/v2/entities/{uid}/attrs", json=data)
 

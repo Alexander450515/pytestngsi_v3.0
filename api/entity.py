@@ -25,6 +25,28 @@ def entity():
     }
 
 
+def entity_replace():
+    return {
+        "temperature": {
+            "value": 25.5
+        },
+        "seatNumber": {
+            "value": 6
+        }
+    }
+
+
+def entity_append():
+    return {
+        "temperature": {
+            "value": 25.5
+        },
+        "seatNumber": {
+            "value": 6
+        }
+    }
+
+
 def empty_entity():
     return {
         "type": "",
@@ -65,17 +87,6 @@ def wrong_entity():
                     "value": "WGS84"
                 }
             }
-        }
-    }
-
-
-def entity_replace():
-    return {
-        "temperature": {
-            "value": 25.5
-        },
-        "seatNumber": {
-            "value": 6
         }
     }
 

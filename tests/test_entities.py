@@ -9,7 +9,7 @@ class TestEntity:
     @pytest.mark.positive_test
     def test_create_new_entity(self, client):
         """Отправляет POST запрос на создание->
-        Отправляет GET запрос->
+        Отправляет GET запрос и проверяет корректность создания->
         Отправляет DELETE запрос на удаление"""
         # Создание
         data = entity.entity()
@@ -36,7 +36,7 @@ class TestEntity:
     def test_replace_all_entity_attributes(self, client):
         """Отправляет POST запрос на создание->
         Отправляет PUT запрос на замену атрибутов->
-        Отправляет GET запрос->
+        Отправляет GET запрос и проверяет корректность создания->
         Отправляет DELETE запрос на удаление"""
         # Создание
         data = entity.entity()
@@ -57,8 +57,8 @@ class TestEntity:
     @pytest.mark.positive_test
     def test_update_or_append_entity_attributes(self, client):
         """Отправляет POST запрос на создание->
-        Отправляет PUT запрос на замену атрибутов->
-        Отправляет GET запрос->
+        Отправляет POST запрос на обновление и замену атрибутов->
+        Отправляет GET запрос и проверяет корректность создания->
         Отправляет DELETE запрос на удаление"""
         # Создание
         data = entity.entity()
@@ -79,8 +79,8 @@ class TestEntity:
     @pytest.mark.positive_test
     def test_update_existing_entity_attributes(self, client):
         """Отправляет POST запрос на создание->
-        Отправляет PUT запрос на замену атрибутов->
-        Отправляет GET запрос->
+        Отправляет PATCH запрос на обновление атрибутов->
+        Отправляет GET запрос и проверяет корректность создания->
         Отправляет DELETE запрос на удаление"""
         # Создание
         data = entity.entity()

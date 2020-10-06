@@ -5,13 +5,13 @@ faker = Faker()
 
 def entity():
     return {
-        "type": faker.word(),
-        "id": faker.pystr(),
+        "type": "car",
+        "id": "d1211",
         "temperature": {
-            "value": faker.pyint()
+            "value": 21.7
         },
         "humidity": {
-            "value": faker.pyint()
+            "value": 60
         },
         "location": {
             "value": "41.3763726, 2.1864475",
@@ -72,10 +72,10 @@ def wrong_entity():
 def entity_replace():
     return {
         "temperature": {
-            "value": faker.pyint()
+            "value": 25.5
         },
         "seatNumber": {
-            "value": faker.pyint()
+            "value": 6
         }
     }
 

@@ -63,7 +63,6 @@ class TestEntity:
         # Добавление и замена
         data_for_append = entity.entity_append()
         client.verify_response(client.update_or_append_entity(data['id'], data_for_append), [204])
-
         # Проверка корректности создания /v2/entities/{entityId}/attrs
         response = client.verify_response(client.get_entity_attribute(data['id']), [200])
         response_body = response.json()
@@ -74,7 +73,28 @@ class TestEntity:
         # Удаление
         client.verify_response(client.delete_entity(data['id']), [204])
 
-    #
+    def test_update_existing_entity_attributes(self, client):
+        """Отправляет POST запрос на создание->
+        Отправляет PUT запрос на замену атрибутов->
+        Отправляет GET запрос->
+        Отправляет DELETE запрос на удаление"""
+        # Создание
+        data = entity.entity()
+        client.verify_response(client.create_entity(data), [201, 204])
+        # Замена
+        data_for_update = entity.entity_update()
+        client.verify_response(client.patch_entity(data['id'], data_for_update), [204])
+        # # Проверка корректности создания /v2/entities/{entityId}/attrs
+        response = client.verify_response(client.get_entity_attribute(data['id']), [200])
+        response_body = response.json()
+        for key in data_for_update:
+            if key in ('id', 'type'):
+                continue
+            assert response_body[key]['value'] == data_for_update[key]['value']
+        # Удаление
+        client.verify_response(client.delete_entity(data['id']), [204])
+
+
     # def test_create_empty_entity(self, client):
     #     """Должен вернуть ошибку 404"""
     #     data = entity.empty_entity()

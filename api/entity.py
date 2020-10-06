@@ -47,6 +47,14 @@ def entity_append():
     }
 
 
+def entity_update():
+    return {
+        "temperature": {
+            "value": 29.5
+        }
+    }
+
+
 def empty_entity():
     return {
         "type": "",

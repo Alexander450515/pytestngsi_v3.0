@@ -44,6 +44,9 @@ class RestfulBookerClient:
     def put_entity(self, uid: str, data: dict):
         return self._s.put(self.host + f"/v2/entities/{uid}/attrs", json=data)
 
+    def patch_entity(self, uid: str, data: dict):
+        return self._s.patch(self.host + f"/v2/entities/{uid}/attrs", json=data)
+
     def delete_entity(self, uid: str):
         return self._s.delete(self.host + f"/v2/entities/{uid}")
 

@@ -29,6 +29,9 @@ class RestfulBookerClient:
             )
         return response
 
+    def get_api_entry_points(self):
+        return self._s.get(self.host + "/v2")
+
     def create_entity(self, data: dict):
         return self._s.post(self.host + "/v2/entities", json=data)
 

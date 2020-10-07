@@ -66,18 +66,18 @@ def empty_entity():
             "value": ""
         },
         "location": {
-            "value": "41.3763726, 2.1864475",
-            "type": "geo:point",
+            "value": "",
+            "type": "",
             "metadata": {
                 "crs": {
-                    "value": "WGS84"
+                    "value": ""
                 }
             }
         }
     }
 
 
-def wrong_entity():
+def wrong_value_types_of_entity():
     return {
         "type": faker.word(),
         "id": faker.pystr(),
@@ -86,6 +86,29 @@ def wrong_entity():
         },
         "humidity": {
             "value": faker.pyint()
+        },
+        "location": {
+            "value": faker.pyint(),
+            "type": faker.pyint(),
+            "metadata": {
+                "crs": {
+                    "value": faker.pyint()
+                }
+            }
+        }
+    }
+
+
+def wrong_json_structure_of_entity():
+    return {
+        "type": "car",
+        # "id": "d1211",
+        "temperature": {
+            # "value": 21.7
+            "type": 21.7
+        },
+        "humidity": {
+            "value": 60
         },
         "location": {
             "value": "41.3763726, 2.1864475",
@@ -99,7 +122,7 @@ def wrong_entity():
     }
 
 
-def empty_entity_replace():
+def empty_entity_for_replace():
     return {
         "temperature": {
             "value": ""
@@ -110,13 +133,13 @@ def empty_entity_replace():
     }
 
 
-def wrong_entity_replace():
+def wrong_value_types_of_entity_for_replace():
     return {
         "temperature": {
-            "value": faker.pyint()
+            "value": "NUMBER SHOULD BE HERE"
         },
         "seatNumber": {
-            "value": faker.pyint()
+            "value": "NUMBER SHOULD BE HERE"
         }
     }
 

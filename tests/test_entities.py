@@ -133,52 +133,35 @@ class TestEntity:
     #     # Удаление
     #     client.verify_response(client.delete_entity(data['id']), [204])
 
-    @pytest.mark.positive_test
-    def test_replace_all_entity_attributes_by_wrong_value_types_of_entity(self, client):
-        """Отправляет PUT запрос с пустыми значениями->
-        Должен вернуть status_code 204 и создать пусто->
+    # @pytest.skip
+    # @pytest.mark.positive_test
+    # def test_replace_all_entity_attributes_by_wrong_value_types_of_entity(self, client):
+    #     """Отправляет PUT запрос с пустыми значениями->
+    #     Должен вернуть status_code 204 и создать объект с некорректным значением->
+    #     Отправляет DELETE запрос на удаление"""
+    #     # Создание
+    #     data = entity.entity()
+    #     client.verify_response(client.create_entity(data), [201, 204])
+    #     # Замена атрибутов
+    #     data_for_replace = entity.wrong_value_types_of_entity_for_replace()
+    #     client.verify_response(client.put_entity(data['id'], data_for_replace), [204])
+    #     # Удаление
+    #     client.verify_response(client.delete_entity(data['id']), [204])
+
+    @pytest.mark.negative_test
+    def test_replace_all_entity_with_wrong_json_structure(self, client):
+        """Отправляет PUT запрос с неправильной структрурой файла json->
+        Должен вернуть status_code 400->
         Отправляет DELETE запрос на удаление"""
         # Создание
         data = entity.entity()
-        # client.verify_response(client.create_entity(data), [201, 204])
+        client.verify_response(client.create_entity(data), [201, 204])
         # Замена атрибутов
-        data_for_replace = entity.wrong_value_types_of_entity_for_replace()
+        data_for_replace = entity.wrong_json_structure_for_replace()
         client.verify_response(client.put_entity(data['id'], data_for_replace), [400])
         # Удаление
-        # client.verify_response(client.delete_entity(data['id']), [204])
+        client.verify_response(client.delete_entity(data['id']), [204])
 
 
 
 
-    # @pytest.mark.negative_test
-    # def test_create_entity_with_wrong_value_types(self, client):
-    #     """Отправляет POST запрос с неверным типом данных->
-    #     Должен вернуть ошибку 400"""
-    #     data = entity.wrong_value_types_of_entity()
-    #     client.verify_response(client.create_entity(data), [400])
-    #
-    # @pytest.mark.negative_test
-    # def test_create_entity_with_wrong_json_structure(self, client):
-    #     """Отправляет POST запрос с неправильной структурой файла json->
-    #     Должен вернуть ошибку 400"""
-    #     data = entity.wrong_value_types_of_entity()
-    #     client.verify_response(client.create_entity(data), [400])
-
-
-
-
-
-    # def test_update_entity(self, client):
-    #     data = random.random_entity()
-    #     res = client.vr(client.create_entity(data), [200, 201])
-    #     created = res.json()
-    #     bookingid = created.get("bookingid")
-    #     data2 = random.random_entity()
-    #     res = client.vr(client.update_entity(bookingid, data2))
-    #     updated = res.json()
-    #     assert updated == data2
-    #
-    # def test_not_existing_entity(self, client):
-    #     res = client.get_entity(randint(10000, 99999))
-    #     assert res.status_code == 404
-    #

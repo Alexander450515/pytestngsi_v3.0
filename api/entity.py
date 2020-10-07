@@ -143,6 +143,17 @@ def wrong_value_types_of_entity_for_replace():
         }
     }
 
+
+def wrong_json_structure_for_replace():
+    return {
+        "temperature": {
+            "value": "NUMBER SHOULD BE HERE"
+        },
+        "seatNumber": {
+            "value": "NUMBER SHOULD BE HERE"
+        }
+    }
+
 # {
 #         "firstname": faker.first_name(),
 #         "lastname": faker.last_name(),

@@ -162,6 +162,87 @@ class TestEntity:
         # Удаление
         client.verify_response(client.delete_entity(data['id']), [204])
 
+    @pytest.mark.negative_test
+    def test_update_or_append_entity_attributes_with_empty_entity(self, client):
+        """Отправляет POST запрос с пустыми значениями->
+        Должен вернуть status_code 204 и заменить значение объекта на пустое->
+        Отправляет DELETE запрос на удаление"""
+        # Создание
+        data = entity.entity()
+        client.verify_response(client.create_entity(data), [201, 204])
+        # Добавление и замена
+        data_for_append = entity.empty_entity_for_append()
+        client.verify_response(client.update_or_append_entity(data['id'], data_for_append), [204])
+        # Удаление
+        client.verify_response(client.delete_entity(data['id']), [204])
+
+    @pytest.mark.negative_test
+    def test_update_or_append_entity_with_wrong_value_types(self, client):
+        """Отправляет POST запрос с неверным типом данных->
+        Должен вернуть status_code 204 и заменить значение объекта на значение с неверным типом данных->
+        Отправляет DELETE запрос на удаление"""
+        # Создание
+        data = entity.entity()
+        client.verify_response(client.create_entity(data), [201, 204])
+        # Добавление и замена
+        data_for_append = entity.wrong_value_types_of_entity_for_append()
+        client.verify_response(client.update_or_append_entity(data['id'], data_for_append), [204])
+        # Удаление
+        client.verify_response(client.delete_entity(data['id']), [204])
+
+    @pytest.mark.negative_test
+    def test_update_or_append_entity_with_wrong_json_structure(self, client):
+        """Отправляет POST запрос с неправильной структурой файла json->
+        Должен вернуть status_code 400->
+        Отправляет DELETE запрос на удаление"""
+        # Создание
+        data = entity.entity()
+        client.verify_response(client.create_entity(data), [201, 204])
+        # Добавление и замена
+        data_for_append = entity.wrong_json_structure_for_append()
+        client.verify_response(client.update_or_append_entity(data['id'], data_for_append), [400])
+        # Удаление
+        client.verify_response(client.delete_entity(data['id']), [204])
+
+    @pytest.mark.negative_test
+    def test_update_existing_entity_attributes_with_empty_entity(self, client):
+        """Отправляет PATCH запрос с пустыми значениями->
+        Должен вернуть status_code 204 и заменить значение объекта на пустое->
+        Отправляет DELETE запрос на удаление"""
+        # Создание
+        data = entity.entity()
+        client.verify_response(client.create_entity(data), [201, 204])
+        # Замена
+        data_for_update = entity.empty_entity_for_update()
+        client.verify_response(client.patch_entity(data['id'], data_for_update), [204])
+        # Удаление
+        client.verify_response(client.delete_entity(data['id']), [204])
+
+    @pytest.mark.negative_test
+    def test_update_existing_entity_with_wrong_value_types(self, client):
+        """Отправляет PATCH запрос с неверным типом данных->
+        Должен вернуть status_code 204 и заменить значение объекта на значение с неверным типом данных->
+        Отправляет DELETE запрос на удаление"""
+        # Создание
+        data = entity.entity()
+        client.verify_response(client.create_entity(data), [201, 204])
+        # Замена
+        data_for_update = entity.empty_entity_for_update()
+        client.verify_response(client.patch_entity(data['id'], data_for_update), [204])
+        # Удаление
+        client.verify_response(client.delete_entity(data['id']), [204])
 
 
-
+    @pytest.mark.negative_test
+    def test_create_entity_with_wrong_json_structure(self, client):
+        """Отправляет PATCH запрос с неправильной структурой файла json->
+        Должен вернуть status_code 400->
+        Отправляет DELETE запрос на удаление"""
+        # Создание
+        data = entity.entity()
+        client.verify_response(client.create_entity(data), [201, 204])
+        # Замена
+        data_for_update = entity.wrong_json_structure_for_update()
+        client.verify_response(client.patch_entity(data['id'], data_for_update), [400])
+        # Удаление
+        client.verify_response(client.delete_entity(data['id']), [204])

@@ -145,6 +145,29 @@ def wrong_value_types_of_entity_for_replace():
 
 
 def wrong_json_structure_for_replace():
+    return {"value": {
+        "temperature": {
+            "value": 25.5
+        },
+        "seatNumber": {
+            "value": 6
+        }
+    }
+    }
+
+
+def empty_entity_for_append():
+    return {
+        "temperature": {
+            "value": ""
+        },
+        "seatNumber": {
+            "value": ""
+        }
+    }
+
+
+def wrong_value_types_of_entity_for_append():
     return {
         "temperature": {
             "value": "NUMBER SHOULD BE HERE"
@@ -153,6 +176,44 @@ def wrong_json_structure_for_replace():
             "value": "NUMBER SHOULD BE HERE"
         }
     }
+
+
+def wrong_json_structure_for_append():
+    return {"value": {
+        "temperature": {
+            "value": 25.5
+        },
+        "seatNumber": {
+            "value": 6
+        }
+    }}
+
+
+def empty_entity_for_update():
+    return {
+        "temperature": {
+            "value": ""
+        }
+    }
+
+
+def wrong_value_types_of_entity_for_update():
+    return {
+        "temperature": {
+            "value": "NUMBER SHOULD BE HERE"
+        }
+    }
+
+
+def wrong_json_structure_for_update():
+    return {"value": {
+        "temperature": {
+            "value": "NUMBER SHOULD BE HERE"
+        }
+    }}
+
+
+
 
 # {
 #         "firstname": faker.first_name(),

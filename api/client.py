@@ -35,8 +35,9 @@ class RestfulBookerClient:
     def create_entity(self, data: dict):
         return self._s.post(self.host + "/v2/entities", json=data)
 
-    def get_entity(self, uid: str):
-        return self._s.get(self.host + f"/v2/entities/{uid}")
+    # тут мб поломал
+    def get_entity(self, uid: str, headers: dict):
+        return self._s.get(self.host + f"/v2/entities/{uid}", header=headers)
 
     def get_entity_attribute(self, uid: str):
         return self._s.get(self.host + f"/v2/entities/{uid}/attrs")

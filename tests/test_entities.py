@@ -233,7 +233,6 @@ class TestEntity:
         # Удаление
         client.verify_response(client.delete_entity(data['id']), [204])
 
-
     @pytest.mark.negative_test
     def test_create_entity_with_wrong_json_structure(self, client):
         """Отправляет PATCH запрос с неправильной структурой файла json->
